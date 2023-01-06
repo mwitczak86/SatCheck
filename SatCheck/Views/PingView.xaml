@@ -1,0 +1,178 @@
+﻿<UserControl x:Class="SatCheck.Views.PingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SatCheck.Views"
+             xmlns:models="clr-namespace:SatCheck.Models"
+             xmlns:viewModels="clr-namespace:SatCheck.ViewModels"
+             xmlns:views="clr-namespace:SatCheck.Views"
+             mc:Ignorable="d" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             d:DesignHeight="600" d:DesignWidth="950">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="Templ">
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}" Margin="0,0,0,0" />
+
+        </DataTemplate>
+
+
+        <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader"  BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+
+            <Style.Triggers>
+                <Trigger Property="Focusable" Value="False"/>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <viewModels:PingViewModel></viewModels:PingViewModel>
+        
+    </UserControl.DataContext>
+    
+    
+
+    <Grid>
+<!--TITLEBAR DESIGN!-->
+        
+        <TextBlock Padding="0" Margin="40,20,0,0" VerticalAlignment="Top" Foreground="White" Text="Test stacji" Opacity="0.8"></TextBlock>
+        <materialDesign:PackIcon Kind="SatelliteUplink" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="10,10,0,0" Opacity="0.8"></materialDesign:PackIcon>
+
+        <TextBlock x:Name="wybor_label" Margin="340,25,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" Text="Wybierz stację:" Opacity="0.8" Width="100"></TextBlock>
+
+        <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" MaxDropDownHeight="100" Width="130" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="450,20,0,0" x:Name="wybor"  ItemsSource="{Binding ListaKomp}" SelectedItem="{Binding ZaznaczonyKomponent}" DisplayMemberPath="Nazwa" >
+
+        </ComboBox>
+        <Border BorderThickness="0" BorderBrush="Transparent"/>
+
+        <!--UPPER INFO BLOCK DESIGN!-->
+        
+        <Grid  Width="800" Height="60" Margin="200,70,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Opacity="0.9">
+            <TextBlock Margin="260,0,80,0"  VerticalAlignment="Top" Text="Info:"/>
+            <TextBlock Margin="0,20,000,0"  VerticalAlignment="Top" Text="Nazwa:"/>
+            <TextBlock Margin="70,20,320,00"  VerticalAlignment="Top" Text="{Binding ZaznaczonyKomponent.Nazwa}"/>
+
+            <TextBlock Margin="170,20,180,0"  VerticalAlignment="Top" Text="Adres Satelitarny:"/>
+            <TextBlock Margin="400,20,20,0"  VerticalAlignment="Top" Text="Adres Ethernet:"/>
+            <TextBlock Margin="290,20,50,00"  VerticalAlignment="Top" Text="{Binding ZaznaczonyKomponent.AdresSat}"/>
+            <TextBlock Margin="520,20,0,00"  VerticalAlignment="Top" Text="{Binding ZaznaczonyKomponent.AdresEth}"/>
+        </Grid>
+        
+<!--CHART DESIGN!-->
+        
+        <Grid Name="ChartGrid" Background="Transparent" Margin="0,130,0,0" Width="470" Height="400" VerticalAlignment="Top" HorizontalAlignment="Left">
+            
+            <!--Here we disable tooltips and hovering to get a better performance-->
+            <lvc:CartesianChart AnimationsSpeed="0:0:0.35" Hoverable="False" DataTooltip="{x:Null}" LegendLocation="Bottom">
+                <lvc:CartesianChart.Series>
+                    <lvc:LineSeries Values="{Binding ChartValues}" 
+                                PointGeometry="{x:Null}" 
+                                LineSmoothness="0"
+                                Title="Adres Sat"
+                                StrokeThickness="3" 
+                                Stroke="GreenYellow"
+                                PointForeground="White"
+                                Fill="Transparent"/>
+                    <lvc:LineSeries Values="{Binding ChartValues2}" 
+                                PointGeometry="{x:Null}" 
+                                LineSmoothness="0"
+                                Title="Adres Eth"
+                                StrokeThickness="3" 
+                                Stroke="Blue"
+                                PointForeground="White"
+                                Fill="Transparent"/>
+                
+                
+                </lvc:CartesianChart.Series>
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis LabelFormatter="{Binding DateTimeFormatter}" 
+                          MaxValue="{Binding AxisMax}" 
+                          MinValue="{Binding AxisMin}"
+                          Unit="{Binding AxisUnit}">
+                        <lvc:Axis.Separator>
+                            <lvc:Separator Step="{Binding AxisStep}" />
+                        </lvc:Axis.Separator>
+                    </lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis LabelFormatter="{Binding ValueFormatter2}"
+                              MinValue="0"/>
+
+                </lvc:CartesianChart.AxisY>
+                    
+            </lvc:CartesianChart>
+        </Grid>
+        
+        
+        
+        <!--STATUS LISTVIEW DESIGN!-->
+        <Grid x:Name="ReplyInfo" Margin="0,130,0,0" Width="470" Height="400" VerticalAlignment="Top" HorizontalAlignment="Right">
+            <StackPanel>
+            <TextBlock Margin="00,10,00,0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="RTTinfo:" Opacity="0.8"/>
+                <ListView x:Name="lstRep" ItemsSource="{Binding ListaRep}" Padding="00" Width="460" Height="280">
+                    <ListView.View>
+                        
+                        <GridView x:Name="grdNames">
+                            <GridViewColumn Header="Status"
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                            HeaderTemplate="{StaticResource Templ}"
+                                            DisplayMemberBinding="{Binding Status}"
+                                            Width="140"/>
+                            <GridViewColumn Header="Adres IP" 
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                            HeaderTemplate="{StaticResource Templ}"
+                                            DisplayMemberBinding="{Binding Address}"
+                                            Width="140"/>
+                            
+                            <GridViewColumn Header="Czas [ms]" 
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                            HeaderTemplate="{StaticResource Templ}"
+                                            DisplayMemberBinding="{Binding Rtt}"
+                                            Width="80"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </StackPanel>
+        </Grid>
+
+        <Button Name="StartButton" Padding="0" BorderThickness="0" Background="GreenYellow" Opacity="0.8" Margin="00,0,200,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Click="StartClicked" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="CheckBold" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="-1,2,5,0"></materialDesign:PackIcon>
+                <TextBlock Grid.Column="1" Text="Start" HorizontalAlignment="Left" Width="40"></TextBlock>
+            </Grid>
+        </Button>
+
+        <Button Name="StopButton" Padding="0" BorderThickness="0" Background="Red" Opacity="0.8" Margin="00,0,80,20" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="80" Click="StopClicked" >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="Stop" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="-1,2,5,0"></materialDesign:PackIcon>
+                <TextBlock Grid.Column="1" Text="Stop" HorizontalAlignment="Left" Width="40"></TextBlock>
+            </Grid>
+        </Button>
+
+
+
+
+
+
+
+
+    </Grid>
+</UserControl>

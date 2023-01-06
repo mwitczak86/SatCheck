@@ -1,0 +1,177 @@
+﻿<Window x:Class="SatCheck.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SatCheck"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodels="clr-namespace:SatCheck.ViewModels"
+        xmlns:views="clr-namespace:SatCheck.Views"
+        AllowsTransparency="True" WindowStyle="None" Opacity="0.95"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="{materialDesign:MaterialDesignFont}"
+        mc:Ignorable="d"
+        Title="SatCheck" Height="800" Width="1280" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" IsManipulationEnabled="True" 
+    >
+    <Window.Resources>
+        <DataTemplate x:Name="StartViewTemplate" DataType="{x:Type viewmodels:StartViewModel}">
+            <views:StartView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="CalculatorViewTemplate" DataType="{x:Type viewmodels:CalculatorViewModel}">
+            <views:CalculatorView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="DbViewTemplate" DataType="{x:Type viewmodels:DbViewModel}">
+            <views:DbView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="PingViewTemplate" DataType="{x:Type viewmodels:PingViewModel}">
+            <views:PingView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="RaportViewTemplate" DataType="{x:Type viewmodels:RaportViewModel}">
+            <views:RaportView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="StatusViewTemplate" DataType="{x:Type viewmodels:StatusViewModel}">
+            <views:StatusView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="AddDbViewTemplate" DataType="{x:Type viewmodels:AddDbViewModel}">
+            <views:AddDbView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="UpdateDbViewTemplate" DataType="{x:Type viewmodels:UpdateDbViewModel}">
+            <views:UpdateDbView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="DeleteViewTemplate" DataType="{x:Type viewmodels:DeleteView}">
+            <views:DeleteView DataContext="{Binding}"/>
+        </DataTemplate>
+    </Window.Resources>
+    <Window.Background>
+        <ImageBrush ImageSource="/Images//satcheck_bckg.jpg"/>
+    </Window.Background>
+
+
+    <Border BorderBrush="Black" CornerRadius="15">
+        <Grid>
+            <Grid HorizontalAlignment="Left" Height="65" VerticalAlignment="Top" Width="1280" Background="Black" Opacity="1" MouseDown="Window_MouseDown">
+                <materialDesign:PackIcon Kind="SatelliteVariant" HorizontalAlignment="Left" Foreground="White" Margin="20,10,0,0" Height="45" Width="45" Opacity="0.7"></materialDesign:PackIcon>
+                <TextBlock Text="SatCheck" Foreground="White" Margin="70,20,0,10" VerticalAlignment="Center" HorizontalAlignment="Left" Opacity="0.7" FontSize="16" FontFamily="Roboto Light"></TextBlock>
+                <Button Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,20,0" Background="Transparent" BorderBrush="Transparent" Padding="0" Click="ExitBTN">
+                    
+                        <materialDesign:PackIcon Kind="Power" Height="25" Width="25" Foreground="White" Opacity="0.7"></materialDesign:PackIcon>
+                    
+                </Button>
+                <Button Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,50,0" Background="Transparent" BorderBrush="Transparent" Padding="0" Click="HelpBTN">
+
+                    <materialDesign:PackIcon Kind="HelpCircleOutline" Height="20" Width="20" Foreground="White" Opacity="0.7" ></materialDesign:PackIcon>
+
+                </Button>
+            </Grid>
+            
+            <Border BorderBrush="Black" CornerRadius="8" Background="Black" Opacity="0.9" Width="150" Height="680" Margin="10,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0">
+                <Grid 
+                    HorizontalAlignment="Left" 
+                    Height="580" 
+                    Margin="10,90,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="150" 
+                    Background="Transparent"
+                    
+                    >
+                    <StackPanel>
+
+                        <Button Margin="0,0,0,0" VerticalAlignment="Top" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="StartView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="Home" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Start" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0,0,20,0" VerticalAlignment="Bottom" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="DbView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="Database" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Baza stacji" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0,0,20,0" VerticalAlignment="Bottom" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="StatusView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="ListStatus" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Status sieci" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0,0,20,0" VerticalAlignment="Bottom" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="PingView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="SatelliteUplink" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Test stacji" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0,0,20,0" VerticalAlignment="Bottom" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="RaportView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="FileDocument" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Raporty" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                        <Button Margin="0,0,20,0" VerticalAlignment="Bottom" Padding="0" Height="75" Width="130" HorizontalAlignment="Left" Background="Black" Foreground="Black" BorderBrush="Transparent" BorderThickness="0" Click="CalculatorView_Clicked">
+                            <Grid Margin="0,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Height="75">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <materialDesign:PackIcon Kind="CalculatorVariant" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center"></materialDesign:PackIcon>
+                                <TextBlock Grid.Row="1" Foreground="White" Margin="0,0,0,0" TextAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="16" Text="Kalkulatory" Opacity="0.8"></TextBlock>
+                            </Grid>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+
+            </Border>
+            <Border BorderBrush="Black" CornerRadius="8" Background="Black" Opacity="0.4" Width="1040" Height="680" Margin="200,90,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Padding="0">
+                
+            </Border>
+            <Grid Width="1000" Height="620" Margin="160,60,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="1">
+                <ContentControl Content="{Binding}"></ContentControl>
+
+            </Grid>
+
+            <Button Name="add" Visibility="Hidden" Background="Transparent" BorderThickness="1" BorderBrush="White" Height="40" Width="110" Margin="0,0,200,60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" Click="AddDb_Clicked">
+
+                <TextBlock Text="Dodaj" Foreground="White" HorizontalAlignment="Center"></TextBlock>
+
+            </Button>
+            <Button Name="update" Visibility="Hidden" Background="Transparent" BorderThickness="1" BorderBrush="White" Height="40" Width="110" Margin="0,0,40,60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="0" Click="UpdateDb_Clicked">
+
+                <TextBlock Text="Edytuj" Foreground="White" HorizontalAlignment="Center"></TextBlock>
+
+            </Button>
+
+            <Button Visibility="Hidden" Name="back" Padding="0" BorderThickness="0" Background="Yellow" Opacity="0.8" Margin="268,90,50,0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="40" Click="Back_Clicked">
+                <materialDesign:PackIcon Kind="ArrowBack" ></materialDesign:PackIcon>
+            </Button>
+
+            
+
+
+
+
+
+
+        </Grid>
+    </Border>
+</Window>

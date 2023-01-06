@@ -1,0 +1,97 @@
+﻿<UserControl x:Class="SatCheck.Views.UpdateDbView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SatCheck.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:SatCheck.Models"
+             xmlns:viewModels="clr-namespace:SatCheck.ViewModels"
+             xmlns:views="clr-namespace:SatCheck.Views"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="600" d:DesignWidth="980">
+    
+        <UserControl.Resources>
+            <DataTemplate x:Key="Templ">
+                <TextBlock HorizontalAlignment="Left" Text="{Binding}" Margin="12,0,0,0"/>
+            </DataTemplate>
+
+
+            <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="Padding" Value="0"/>
+
+                <Style.Triggers>
+                    <Trigger Property="Focusable" Value="False"/>
+                </Style.Triggers>
+
+            </Style>
+        </UserControl.Resources>
+
+        <UserControl.DataContext>
+            <viewModels:UpdateDbViewModel></viewModels:UpdateDbViewModel>
+        </UserControl.DataContext>
+
+
+
+
+    <Grid>
+        <TextBlock Margin="40,20,0,0" VerticalAlignment="Top" Foreground="White" Text="Edycja komponentu" Opacity="0.8"></TextBlock>
+
+        <materialDesign:PackIcon Kind="Database" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="10,10,0,0" Opacity="0.8"></materialDesign:PackIcon>
+
+        <ComboBox ScrollViewer.VerticalScrollBarVisibility="Visible" MaxDropDownHeight="100" Width="130" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,100,0,0" x:Name="wybor"  ItemsSource="{Binding Lista}" SelectedItem="{Binding ZaznaczonyKomponent}"  DisplayMemberPath="Nazwa" Grid.Column="0" Grid.Row="2" >
+            
+        </ComboBox>
+        <TextBlock Text="Wybierz stację:" HorizontalAlignment="Center" Margin="-250,105,0,0"/>
+
+        <Grid Width="750" Height="220" Margin="0,30,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+            </Grid.RowDefinitions>
+           
+            <TextBlock  Grid.Column="0" Grid.Row="0" Text="ID" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="14" Foreground="White"></TextBlock>
+            <TextBox Text="{Binding ZaznaczonyKomponent.Id,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="id" Grid.Column="0" Grid.Row="0" Width="40" TextAlignment="Center" Padding="0" HorizontalAlignment="Left" Margin="40,0,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20"/>
+            <TextBlock Grid.Column="0" Grid.Row="0" Text="Rola" Margin="200,0,0,0" VerticalAlignment="Center" FontSize="14" Foreground="White"></TextBlock>
+            <ComboBox Text="{Binding ZaznaczonyKomponent.Rola,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="maslave" VerticalAlignment="Center" BorderThickness="0" Grid.Row="0" Grid.Column="0" Margin="240,0,0,0">
+                <ComboBoxItem Foreground="White">Master</ComboBoxItem>
+                <ComboBoxItem Foreground="White"  IsSelected="True">Slave</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="Nazwa" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="14" Foreground="White"></TextBlock>
+            <TextBox Text="{Binding ZaznaczonyKomponent.Nazwa,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"  Name="nazwa" Grid.Column="1" Grid.Row="0" Width="280" TextAlignment="Center" Padding="0" HorizontalAlignment="Left" Margin="70,0,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20"/>
+            <TextBlock Grid.Column="0" Grid.Row="1" Text="Adres IP Satelitarny" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="14" Foreground="White"></TextBlock>
+            <TextBox Text="{Binding ZaznaczonyKomponent.AdresSat,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="adresSat" Grid.Column="0" Grid.Row="1" Width="200" TextAlignment="Center" Padding="0" HorizontalAlignment="Left" Margin="150,0,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="Adres IP Ethernet" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="14" Foreground="White"></TextBlock>
+            <TextBox Text="{Binding ZaznaczonyKomponent.AdresEth,UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Name="adresEth" Grid.Column="1" Grid.Row="1" Width="208" TextAlignment="Center" Padding="0" HorizontalAlignment="Left" Margin="140,0,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20"/>
+            
+            
+            <Button Padding="0" Grid.Column="1" Grid.Row="2" BorderThickness="0" Background="GreenYellow" Opacity="0.8" Margin="00,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="80" Click="Update_Clicked">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <materialDesign:PackIcon Grid.Column="0" Kind="CheckBold" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="-1,2,5,0"></materialDesign:PackIcon>
+                    <TextBlock Grid.Column="1" Text="Zapisz" HorizontalAlignment="Left" Width="40"></TextBlock>
+                </Grid>
+            </Button>
+        </Grid>
+        <Border Name="update" Visibility="Collapsed" Background="Black"  Height="30"  Width="250" CornerRadius="15">
+            <TextBlock  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="GreenYellow" Opacity="0.9" Text="Komponent został zmodyfikowany!"></TextBlock>
+        </Border>
+    </Grid>
+
+
+</UserControl>
+

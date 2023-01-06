@@ -1,0 +1,292 @@
+﻿<UserControl x:Class="SatCheck.Views.CalculatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SatCheck.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:SatCheck.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="980">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="Templ">
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}" Margin="0,0,0,0" />
+
+        </DataTemplate>
+
+
+        <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader"  BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="5,0,0,0"/>
+
+            <Style.Triggers>
+                <Trigger Property="Focusable" Value="False"/>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Resources>
+    
+    <UserControl.DataContext>
+        <viewModels:CalculatorViewModel></viewModels:CalculatorViewModel>
+    </UserControl.DataContext>
+    <Grid>
+
+        <TextBlock Margin="40,20,0,0" VerticalAlignment="Top" Foreground="White" Text="Kalkulatory" Opacity="0.8"></TextBlock>
+
+        <materialDesign:PackIcon Kind="CalculatorVariant" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="10,10,0,0" Opacity="0.8"></materialDesign:PackIcon>
+
+        <Grid x:Name="Calculators" Width="900" Height="500" VerticalAlignment="Top" Margin="0,50,0,0" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Border BorderBrush="White" BorderThickness="0.2" >
+                <Grid x:Name="CalcButtons" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <!--<ColumnDefinition/>-->
+
+
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Name="srBtn" Visibility="Visible" Background="Transparent" BorderThickness=".6" BorderBrush="White" Height="40" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Click="srBtn_Click" >
+                        <TextBlock Text="Symbol Rate" Foreground="White" HorizontalAlignment="Center" FontWeight="Light"></TextBlock>
+
+                    </Button>
+
+                    <Button Grid.Column="1" Name="frBtn" Visibility="Visible" Background="Transparent" BorderThickness=".6" BorderBrush="White" Height="40" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Click="frBtn_Click" >
+                        <TextBlock Text="Częstotliwość śledzenia" Foreground="White" HorizontalAlignment="Center" FontWeight="Light"></TextBlock>
+
+                    </Button>
+
+                    <Button Grid.Column="2" Name="dbmBtn" Visibility="Visible" Background="Transparent" BorderThickness=".6" BorderBrush="White" Height="40" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" Click="dbmBtn_Click" >
+                        <TextBlock Text="Kalkulator jednostek" Foreground="White" HorizontalAlignment="Center" FontWeight="Light"></TextBlock>
+
+                    </Button>
+
+                    <!--<Button Grid.Column="3" Name="subBtn" Visibility="Visible" Background="Transparent" BorderThickness=".6" BorderBrush="White" Height="40" Width="160" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="0" >
+                        <TextBlock Text="Kalkulator podsieci" Foreground="White" HorizontalAlignment="Center" FontWeight="Light"></TextBlock>
+
+                    </Button>-->
+
+                </Grid>
+            </Border>
+
+
+            <Grid Margin="0,30,0,0" x:Name="CalcView" Grid.Row="1">
+
+                <!--Symbol Rate Calculations View-->
+                <Grid x:Name="srView" Visibility="Collapsed">
+                    <TextBlock Text="FEC: "/>
+                    <ComboBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Margin="100,-5,0,0" Name="fecCombo" SelectedValue="{Binding Fec, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding FecList, Mode=OneTime}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"
+                              />
+
+                    <TextBlock Text="Modulacja: " Margin="0,55,0,0"/>
+                    <ComboBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Margin="100,50,0,0" Name="modCombo" SelectedValue="{Binding Modulation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding ModList, Mode=OneTime}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"/>
+
+                    <TextBox Text="{Binding DataRate}" Name="dr" Width="80" Padding="0" TextAlignment="Left" Margin="-620,-155,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20"/>
+                    <TextBlock Text="Data Rate: " Margin="0,110,0,0"/>
+                    <TextBlock Text="[kbps]" Margin="190,110,0,0"/>
+
+                    <TextBlock Text="Rolloff: " Margin="0,165,0,0"/>
+                    <ComboBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="80" Margin="100,160,0,0" Name="rollCombo" SelectedValue="{Binding RollOff, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding RollList, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"/>
+
+
+
+
+                    <TextBlock Text="Symbol rate: " FontSize="20" HorizontalAlignment="Center" Margin="75,-5,0,0"/>
+                    <TextBlock Text="{Binding SymbolRate, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="20" HorizontalAlignment="Center" Margin="350,-5,0,0" FontWeight="Normal" Foreground="YellowGreen"/>
+                    <TextBlock Text="[ksps]" FontSize="20" HorizontalAlignment="Center" Margin="500,-5,0,0"/>
+
+                    <TextBlock Text="Zajęte pasmo: " FontSize="20" HorizontalAlignment="Center" Margin="55,70,0,0"/>
+                    <TextBlock Text="{Binding OccBand,  UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="20" HorizontalAlignment="Center" Margin="350,70,0,0" FontWeight="Normal" Foreground="YellowGreen"/>
+                    <TextBlock Text="[MHz]" FontSize="20" HorizontalAlignment="Center" Margin="500,70,0,0"/>
+
+
+                </Grid>
+
+
+                <!--Tracking Frequency View-->
+
+                <Grid x:Name="frView" Visibility="Collapsed">
+                    <TextBlock Text="Typ LNB: "/>
+                    <ComboBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="100,-5,0,0" Name="loSelectorCombo" SelectedValue="{Binding LoSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding LoSelectorList, Mode=OneTime}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"
+                              />
+
+                    <TextBlock Text="LO: " Margin="0,55,0,0" Name="loTextP"/>
+                    <ComboBox Background="Transparent"  VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="100,50,0,0" Name="loComboP" SelectedValue="{Binding LoValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding LoListPassive}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+
+                    <TextBlock Text="LO: " Margin="0,55,0,0" x:Name="loTextA"/>
+                    <ComboBox VerticalAlignment="Top" HorizontalAlignment="Left" Width="100" Margin="100,50,0,0" Name="loComboA" SelectedValue="{Binding LoValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding LoListActive}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value">
+                        <ComboBox.Style>
+                            <Style TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                   
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding IsEnabled}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                    </Style.Triggers>
+                            </Style>
+                        </ComboBox.Style>
+                    </ComboBox>
+
+                    <TextBox Text="{Binding Beacon}" Name="beaconTB" Width="80" Padding="0" TextAlignment="Left" Margin="-620,-155,0,0" BorderBrush="White" Foreground="White" Background="Transparent" Height="20" TextWrapping="Wrap"/>
+                    <TextBlock Text="Beacon: " Margin="0,110,0,0"/>
+                    <TextBlock Text="[MHz]" Margin="190,110,0,0"/>
+
+
+                    <TextBlock Text="Częstotliwość śledzenia: " FontSize="20" HorizontalAlignment="Center" Margin="75,-5,0,0"/>
+                    <TextBlock Text="{Binding TrackingFrequency, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" FontSize="20" HorizontalAlignment="Center" Margin="400,-5,0,0" FontWeight="Normal" Foreground="YellowGreen"/>
+                    <TextBlock Text="[MHz]" FontSize="20" HorizontalAlignment="Center" Margin="550,-5,0,0"/>
+
+                    <TextBlock Text="Wartość poza zakresem, wybierz inną konfigurację!" Foreground="Red" TextAlignment="Right" HorizontalAlignment="Right" Margin="0,75,40,0">
+
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource MaterialDesignBody1TextBlock}">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding Warning}" Value="False">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding Warning}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+
+
+
+
+                </Grid>
+                
+                <!--Converter calculator to convert between commonly used units of measure-->
+
+                <Grid x:Name="unitsView" Visibility="Collapsed">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                        
+                    </Grid.ColumnDefinitions>
+
+                    <Grid x:Name="dRcalc" Grid.Column="0">
+                        <StackPanel>
+                            <TextBlock Name="drTitle" Text="DataRate Converter" Foreground="White" TextAlignment="Center"></TextBlock>
+
+                            <TextBox Margin="0,10,0,0" x:Name="drInput" BorderBrush="White" BorderThickness="1" Text="{Binding UnitInput, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBlock Text="wpisz wartość" Foreground="White" Opacity="0.7"  ></TextBlock>
+                            <ComboBox Name="drComboList" SelectedValue="{Binding DrSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding ComboDRSelectorList}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"></ComboBox>
+                            <TextBlock Text="wybierz podstawę" Foreground="White" Opacity="0.7"></TextBlock>
+                            <ListView x:Name="lstRep" ItemsSource="{Binding UnitList}" Padding="00" Width="460" Height="280">
+                                <ListView.View>
+
+                                    <GridView x:Name="unitConverterList">
+                                        <GridViewColumn Header="Jednostka"
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                            HeaderTemplate="{StaticResource Templ}"
+                                            DisplayMemberBinding="{Binding Unit}"
+                                            Width="140"/>
+                                        <GridViewColumn Header="Wartość" 
+                                            HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                            HeaderTemplate="{StaticResource Templ}"
+                                            DisplayMemberBinding="{Binding ValueDR}"
+                                            Width="140"/>
+
+                                       
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid x:Name="dbmCalc" Grid.Column="2">
+                        <StackPanel>
+                            <TextBlock Name="dbmTitle" Text="dBm na Watt" Foreground="White" TextAlignment="Center"></TextBlock>
+
+                            <TextBox x:Name="dbmInput" BorderBrush="White" BorderThickness="1" Text="{Binding DbmInput, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                            <TextBlock Text="wpisz wartość" Foreground="White" Opacity="0.7"></TextBlock>
+                            <ComboBox Name="dbmComboList" SelectedValue="{Binding DbmSelector, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              ItemsSource="{Binding ComboDbmSelectorList}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"></ComboBox>
+                            <TextBlock Text="wybierz podstawę" Foreground="White" Opacity="0.7"></TextBlock>
+                            <Grid Width="150">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" x:Name="dbmResult" FontSize="18" Margin="0,40,0,0" TextAlignment="Center" Text="{Binding DbmResult, UpdateSourceTrigger=PropertyChanged}" Foreground="GreenYellow" Opacity="0.7"></TextBlock>
+                            <TextBlock Grid.Column="1" x:Name="dbmResult2" FontSize="18" Margin="0,40,0,0" TextAlignment="Center" Text="{Binding DbmUnit, UpdateSourceTrigger=PropertyChanged}" Foreground="GreenYellow" Opacity="0.7"></TextBlock>
+                            </Grid>
+
+                        </StackPanel>
+                    </Grid>
+
+                   
+
+
+                </Grid>
+
+            </Grid>
+           
+        </Grid>
+        <Button Name="calculate" Command="{Binding CalcBTNCommand}" Visibility="Visible" Background="Transparent" BorderThickness=".6" BorderBrush="White" Height="40" Width="160" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="0" >
+            <TextBlock Text="Przelicz" Foreground="GreenYellow" HorizontalAlignment="Center" FontWeight="Normal"></TextBlock>
+
+        </Button>
+    </Grid>
+</UserControl>

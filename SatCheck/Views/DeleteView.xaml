@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="SatCheck.Views.DeleteView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SatCheck.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:models="clr-namespace:SatCheck.Models"
+             xmlns:viewModels="clr-namespace:SatCheck.ViewModels"
+             xmlns:views="clr-namespace:SatCheck.Views"
+             mc:Ignorable="d" 
+             
+             d:DesignHeight="600" d:DesignWidth="980">
+    <UserControl.Resources>
+        <DataTemplate x:Key="Templ">
+            <TextBlock HorizontalAlignment="Left" Text="{Binding}" Margin="0,0,0,0"/>
+        </DataTemplate>
+
+
+        <Style x:Key="HeaderStyle" TargetType="GridViewColumnHeader" BasedOn="{StaticResource MaterialDesignRaisedDarkButton}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+
+            <Style.Triggers>
+                <Trigger Property="Focusable" Value="False"/>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <local:DeleteView></local:DeleteView>
+    </UserControl.DataContext>
+
+
+
+    <Grid>
+        <TextBlock Margin="40,20,0,0" VerticalAlignment="Top" Foreground="White" Text="Baza stacji" Opacity="0.8"></TextBlock>
+
+        <materialDesign:PackIcon Kind="Database" Padding="0" Grid.Row="0" Foreground="White" Width="30" Height="30" Margin="10,10,0,0" Opacity="0.8"></materialDesign:PackIcon>
+        <Grid Margin="0,60,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="1*"></RowDefinition>
+
+
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <ListView x:Name="listView4" Width="800" Margin="20,0,0,0" Padding="0" ItemsSource="{Binding usuwane}">
+                    <ListView.View>
+                        <GridView>
+
+
+
+                            <GridViewColumn Header="ID" 
+                                                HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                                HeaderTemplate="{StaticResource Templ}"
+                                                DisplayMemberBinding="{Binding Id}"
+                                                Width="60"/>
+
+                            <GridViewColumn Header="Nazwa" 
+                                                HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                                HeaderTemplate="{StaticResource Templ}"
+                                                DisplayMemberBinding="{Binding Nazwa}"
+                                                Width="170"/>
+                            <GridViewColumn Header="Adres Sat"
+                                                HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                                HeaderTemplate="{StaticResource Templ}"
+                                                DisplayMemberBinding="{Binding AdresSat}"
+                                                Width="170"/>
+                            <GridViewColumn Header="Adres Eth" 
+                                                HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                                HeaderTemplate="{StaticResource Templ}"
+                                                DisplayMemberBinding="{Binding AdresEth}"
+                                                Width="170"/>
+                            <GridViewColumn Header="Rola" 
+                                                HeaderContainerStyle="{StaticResource HeaderStyle}"
+                                                HeaderTemplate="{StaticResource Templ}"
+                                                DisplayMemberBinding="{Binding Rola}"
+                                                Width="70"/>
+
+                            <GridViewColumn>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="checked" IsChecked="{Binding IsSelected, Mode=TwoWay}"  Background="YellowGreen" Padding="0" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                        </GridView>
+                    </ListView.View>
+
+                </ListView>
+            </ScrollViewer>
+
+
+        </Grid>
+
+        <Button Name="usun" Visibility="Visible" Background="Red" BorderThickness="1" BorderBrush="White" Height="40" Width="110" Margin="80,0,40,40" VerticalAlignment="Bottom" HorizontalAlignment="Left" Padding="0" Click="Checked_Delete_Clicked">
+
+            <TextBlock Text="Usuń" Foreground="White" HorizontalAlignment="Center"></TextBlock>
+
+        </Button>
+
+
+    </Grid>
+</UserControl>
